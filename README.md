@@ -4,17 +4,27 @@
 
 **Description**: Automated accounts that act in coordinate fashion. Labels and user objects.
 
-[[Download dataset here!](https://botometer.osome.iu.edu/bot-repository/datasets/cresci-stock-2018/cresci-stock-2018.tar.gz)]
+**Citation:** Cresci, S., Lillo, F., Regoli, D., Tardelli, S., & Tesconi, M. (2019). Cashtag Piggybacking. *ACM Transactions on the Web,* *13*(2), 1-27. doi:10.1145/3313184
 
-**Citation:** Cresci, Stefano, Lillo, Fabrizio, Regoli, Daniele, Tardelli, Serena, & Tesconi, Maurizio. (2019). Cashtag Piggybacking dataset - Twitter dataset enriched with financial data [Data set]. Zenodo. http://doi.org/10.5281/zenodo.2686862
+[[Download dataset here!](https://botometer.osome.iu.edu/bot-repository/datasets/cresci-stock-2018/cresci-stock-2018.tar.gz)]
 
 
 
 ## For quick use
 
-Follow steps in **classification**. Filtering is not required as we have already generated the filtered dataset for you.
+### Results only
+
+Results of our findings can be found in the `results` folder.
 
 
+
+### Classification only
+
+If you would like to jump straight into classification between bot and human accounts, follow the steps in **classification**. Filtering is not required as we have already generated the filtered dataset for you.
+
+
+
+## Understanding our filtered dataset
 
 **User based classification:** 12711 users; 6815 bots, 5896 humans *(53.6%/46.4%)*
 
@@ -71,7 +81,7 @@ Follow steps 1, 3 and 4 of **filter** if you would like to obtain the dataset fr
 
 
 
-To switch between tweet based classification *by tweet*:
+To switch to tweet based classification *by tweet*:
 
 **Line 12:** `dataset = pd.read_csv("filtered dataset/tweet based classification (by tweet).csv")`
 
