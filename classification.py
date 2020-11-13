@@ -9,7 +9,7 @@ warnings.filterwarnings('ignore')
 import numpy as np
 import pandas as pd
 
-dataset = pd.read_csv("filtered dataset/tweet based classification (by tweet).csv")
+dataset = pd.read_csv("filtered dataset/user based classification.csv")
 dataset.shape
 dataset.head()
 dataset.describe()
@@ -34,7 +34,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.neural_network import MLPClassifier
-from sklearn.svm import SVC
+from sklearn.ensemble import ExtraTreesClassifier
 
 classifiers = {"Logistic Regression": LogisticRegression(random_state = seed),
                "SGD": SGDClassifier(random_state = seed),
@@ -44,7 +44,7 @@ classifiers = {"Logistic Regression": LogisticRegression(random_state = seed),
                "Random Forest": RandomForestClassifier(n_estimators = 20, random_state = seed),
                "KNN": KNeighborsClassifier(n_neighbors = 5),
                "Neural Network": MLPClassifier(hidden_layer_sizes = (10, 10, 10), max_iter = 10000, random_state = seed),
-               "SVM": SVC(random_state = seed)}
+               "Extra Trees": ExtraTreesClassifier(random_state = seed)}
 
 from numpy import mean, std
 from sklearn.model_selection import cross_validate
@@ -85,7 +85,7 @@ for classifier in classifiers:
     
 plt.bar(list(measures.keys()), [measure[0] for measure in list(measures.values())], color = "grey")
 
-plt.suptitle("Tweet Based Classification (By Tweet)", fontweight = "bold", fontsize = "x-large", x = 0.51, y = 0.99)
+plt.suptitle("User Based Classification", fontweight = "bold", fontsize = "x-large", x = 0.51, y = 0.99)
 
 wm = plt.get_current_fig_manager()
 wm.window.state("zoomed")
