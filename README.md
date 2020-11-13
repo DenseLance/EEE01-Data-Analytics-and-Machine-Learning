@@ -34,6 +34,10 @@ Filtering of datasets should be done in this particular order:
 
 
 
+If you would like to skip step 3, extract `twint results.csv` from `unfiltered dataset/twint results.rar`.
+
+
+
 ## Classification
 There are two types of classification that we are employing:
 1. user based classification
