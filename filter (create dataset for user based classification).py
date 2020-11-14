@@ -1,6 +1,9 @@
 import re
 import json
 from datetime import datetime, timedelta
+import nltk
+from nltk.corpus import stopwords
+from unidecode import unidecode
 
 # Labelling of accounts
 with open("unfiltered dataset/cresci-stock-2018.tsv", "r") as f:
@@ -17,6 +20,7 @@ with open("unfiltered dataset/cresci-stock-2018_tweets.json", "r") as f:
     sort = json.loads(f.readline())
     f.close()
 
+train = pd.read_csv('
 # Lists
 bot_list = []
 date_list = []
@@ -65,7 +69,10 @@ class User:
           return (sum(len(word) for word in words)/len(words))
     
     stop = stopwords.words('english')
-
+                    
+    def remove_non_ascii(text):
+        return unidecode(unicode(text, encoding = "utf-8"))
+                    
         # Used features
         self.bot = bot
         
@@ -78,13 +85,14 @@ class User:
         
         self.description_special = int(not self.description.isascii())
         self.description_hashtag = len(re.findall(r"#(\w+)", self.description))
+        
         # --> insert text analysis here
         
         self.tweet_word_count = train['tweet'].apply(lambda x: len(str(x).split(" ")))
         self.tweet_char_count = train['tweet'].str.len() 
         self.tweet_avg_word = train['tweet'].apply(lambda x: avg_word(x)) 
         self.tweet_stopwords = train['tweet'].apply(lambda x: len([x for x in x.split() if x in stop])) 
-        self.tweet_special_char = train['tweet'].apply(lambda x: len([x for x in x.split() if x.startswith('#')]))
+        # self.tweet_special_char = train['tweet'].apply(lambda x: len([x for x in x.split() if x.startswith('#')])) 
         self.tweet_numerics = train['tweet'].apply(lambda x: len([x for x in x.split() if x.isdigit()])) 
         self.tweet_upper = train['tweet'].apply(lambda x: len([x for x in x.split() if x.isupper()])) 
 
