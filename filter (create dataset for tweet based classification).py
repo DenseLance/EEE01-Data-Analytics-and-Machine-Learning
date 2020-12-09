@@ -1,5 +1,13 @@
 import csv
 import ast
+import nltk
+import string
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from nltk.probability import FreqDist
+from textblob import TextBlob
+from google_trans_new import google_translator
+
 
 # Labelling of accounts
 with open("unfiltered dataset/cresci-stock-2018.tsv", "r") as f:
@@ -27,15 +35,11 @@ class Tweet:
         self.hashtags = ast.literal_eval(feature["hashtags"])
         self.cashtags = ast.literal_eval(feature["cashtags"])
         self.quote_url = feature["quote_url"]
-
+        self.punctuation_count = len([char for char in self.tweet if char in string.punctuation])
+        
         # Used features
         self.bot = bot
-
         self.is_reply = int(self.id != self.conversation_id)
-
-        self.tweet_int = int(any(char.isdigit() for char in self.tweet))
-        self.tweet_special = int(not self.tweet.isascii())
-        # --> insert text analysis here
 
         self.mentions_count = len(self.mentions)
         self.urls_count = len(self.urls)
@@ -51,12 +55,73 @@ class Tweet:
         self.quote_url_presence = int(False if self.quote_url is "" else True) # 0 means tweet is unavailable
 
         self.video = int(feature["video"])
+
+        # Basic feature extraction of tweets
+        
+        self.word_count = len(self.tweet.split())
+        self.char_count = len(self.tweet) - self.tweet.count(" ") - self.punctuation_count # to be edited --> include https currently
+        self.nonascii_count = len([char for char in self.tweet if char.isascii() == False])
+        self.avg_word_length = self.char_count / self.word_count
+        self.uppercase_count = len([char for char in self.tweet if char.isupper() == True])
+        self.numerics_count = len([char for char in self.tweet if char.isdigit() == True])
+
+        # Translation of tweets
+        
+        translator = google_translator()
+        
+        try: 
+            if translator.detect(self.tweet)[0] != 'en':
+                self.tweet_processed = translator.translate(self.tweet)    
+            else:
+                self.tweet_processed = self.tweet
+            self.translated = int(translator.detect(self.tweet)[0] != 'en')
+##            print(self.translated)
+        except Exception as e:
+            print (e)
+            self.tweet_processed = self.tweet
+            self.translated = int(self.tweet_processed != self.tweet)
+            print (self.user_id, ":", self.tweet_processed)
+
+        # Pre-processing of tweets
+
+        self.tweet_processed = self.tweet.lower()
+
+        for url in self.tweet_processed.split():
+            if url.startswith('https'):
+                self.tweet_processed = self.tweet_processed.replace(url,'')
+
+        for user in self.tweet_processed.split():
+            if user.startswith('@'):
+                self.tweet_processed = self.tweet_processed.replace(user,'')
+
+        for char in string.punctuation:
+            self.tweet_processed = self.tweet_processed.replace(char,'')
+        
+        tokens = nltk.word_tokenize(self.tweet_processed)
+        freq_dist = nltk.FreqDist(tokens)
+        
+        common_words = str(freq_dist.keys())[:5] # problem: not all tweets in eng
+        for word in common_words:
+            self.tweet_processed = self.tweet_processed.replace(common_words,'')
+        
+        rare_words = str(freq_dist.keys())[-5:] # problem: not all tweets in eng
+        for word in rare_words:
+            self.tweet_processed = self.tweet_processed.replace(rare_words,'')
+        
+        # Sentiment analysis
+        
+        self.sentiment_polarity = TextBlob(self.tweet_processed).sentiment[0]
+        self.sentiment_subjectivity = TextBlob(self.tweet_processed).sentiment[1]
         
         # Full list
         self.list = [self.id,
                      self.is_reply,
-                     self.tweet_int,
-                     self.tweet_special,
+                     self.word_count,
+                     self.char_count,
+                     self.nonascii_count,
+                     self.avg_word_length,
+                     self.uppercase_count,
+                     self.numerics_count,
                      self.mentions_count,
                      self.urls_count,
                      self.photos_count,
@@ -67,7 +132,11 @@ class Tweet:
                      self.cashtags_count,
                      self.quote_url_presence,
                      self.video,
-                     self.bot]
+                     self.bot,
+                     self.translated,
+                     self.sentiment_polarity,
+                     self.sentiment_subjectivity,
+                     self.tweet_processed]
 
     def print(self):
         temp = ""
@@ -91,21 +160,21 @@ with open("unfiltered dataset/twint results.csv", "r", encoding = "utf-8") as f:
             tweet_list.append(Tweet(row, None))
     f.close()
 
-with open("filtered dataset/tweet based classification (by tweet).csv", "w") as f:
-    f.write("id,is reply,integer in tweet,special character in tweet,number of mentions,number of urls,number of photos,number of replies,number of retweets,number of likes,number of hashtags,number of cashtags,quoting other tweets,video,bot" + "\n")
+with open("filtered dataset/tweet based classification (by tweet).csv", "w", encoding = "utf-8") as f:
+    f.write("id,is reply,word count in tweet,number of characters,number of non-acscii characters,average word length,number of uppercase words,number of numerics,number of mentions,number of urls,number of photos,number of replies,number of retweets,number of likes,number of hashtags,number of cashtags,quoting other tweets,video,bot,translation of tweet,polarity of tweet,subjectivity of tweet,processed tweet" + "\n")
 
     for tweet in tweet_list:
         f.write(tweet.print() + "\n")
 
     f.close()
 
-with open("filtered dataset/tweet based classification (by user).csv", "w") as f:
-    f.write("id,is reply,integer in tweet,special character in tweet,number of mentions,number of urls,number of photos,number of replies,number of retweets,number of likes,number of hashtags,number of cashtags,quoting other tweets,video,bot,number of tweets" + "\n")
+with open("filtered dataset/tweet based classification (by user).csv", "w", encoding = "utf-8") as f:
+    f.write("id,is reply,word count in tweet,number of characters,number of non-acscii characters,average word length,number of uppercase words,number of numerics,number of mentions,number of urls,number of photos,number of replies,number of retweets,number of likes,number of hashtags,number of cashtags,quoting other tweets,video,bot,translation of tweet,polarity of tweet,subjectivity of tweet,processed tweet" + "\n")
 
     curr_user = ""
     curr_data = []
     counter = 0
-    
+        
     for tweet in tweet_list:
         user = str(tweet.user_id)
 
