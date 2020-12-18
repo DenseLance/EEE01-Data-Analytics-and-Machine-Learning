@@ -26,11 +26,11 @@ If you would like to jump straight into classification between bot and human acc
 
 ## Understanding our filtered dataset
 
-**User based classification:** 12711 users; 6815 bots, 5896 humans *(53.6%/46.4%)*
+**User based classification:** 10470 users; 5363 bots, 5107 humans *(51.2%/48.8%)*
 
-**Tweet based classification by tweet:** 1221471 tweets; 36830 bots, 1184641 humans  *(3.0%/97.0%)*
+**Tweet based classification by tweet:** 1068218 tweets; 30428 bots, 1037790 humans  *(2.8%/97.2%)*
 
-**Tweet based classification by user:** 4316 users; 1276 bots, 3040 humans *(29.6%/70.4%)*
+**Tweet based classification by user:** 3662 users; 1016 bots, 2646 humans *(27.7%/72.3%)*
 
 
 
