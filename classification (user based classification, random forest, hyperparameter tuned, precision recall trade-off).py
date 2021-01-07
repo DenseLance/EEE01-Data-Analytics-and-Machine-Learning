@@ -70,7 +70,7 @@ f1_curve_values = [0.2 * i for i in range(1, 5)] # 0.2 to 0.8
 for value in f1_curve_values:
     x_coor = np.linspace(0.01, 1)
     y_coor = value * x_coor / (2 * x_coor - value)
-    plt.plot(x_coor[y_coor >= 0], y_coor[y_coor >= 0], label = "iso-f1 curves", color = 'gray', alpha = 0.2)
+    plt.plot(x_coor[y_coor >= 0], y_coor[y_coor >= 0], label = "iso-f1 curves", color = 'gray', linewidth = 3.0, alpha = 0.2)
     plt.annotate(f"f1 = {round(value, 1)}", xy = (0.9, y_coor[45] + 0.02))
 
 pr_curve.legend(labels = ("precision-recall curve", "iso-f1 curves"), loc = "best")
