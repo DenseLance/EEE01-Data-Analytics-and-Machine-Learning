@@ -50,8 +50,8 @@ mpl.style.use('seaborn')
 for classifier in classifiers:
     print(f"[{classifier}]")
 
-    # Accuracy, Precision, Recall, F1, ROC-AUC score
-    scores = cross_validate(classifiers[classifier], X, y, cv = cross_validator, scoring = ["accuracy", "precision", "recall", "f1", "roc_auc"])
+    # Accuracy, Precision, Recall, F1
+    scores = cross_validate(classifiers[classifier], X, y, cv = cross_validator, scoring = ["accuracy", "precision", "recall", "f1"])
     measures["accuracy"] = (mean(scores["test_accuracy"]), std(scores["test_accuracy"]))
     measures["precision"] = (mean(scores["test_precision"]), std(scores["test_precision"]))
     measures["recall"] = (mean(scores["test_recall"]), std(scores["test_recall"]))

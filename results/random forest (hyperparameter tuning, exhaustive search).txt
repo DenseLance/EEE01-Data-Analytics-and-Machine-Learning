@@ -1,0 +1,36 @@
+Hyperparameters considered for exhaustive search:
+{'bootstrap': [False],
+ 'max_depth': [20, 30, 40, 50],
+ 'max_features': ['sqrt'],
+ 'min_samples_leaf': [1, 2, 3],
+ 'min_samples_split': [2, 3, 4],
+ 'n_estimators': [1500, 1600, 1700]}
+
+
+
+
+
+Best hyperparameters using exhaustive search:
+{'bootstrap': False,
+ 'max_depth': 30,
+ 'max_features': 'sqrt',
+ 'min_samples_leaf': 1,
+ 'min_samples_split': 3,
+ 'n_estimators': 1600}
+
+
+
+
+
+Results when using best hyperparamaters from exhaustive search:
+accuracy: 0.8727793696275071
+std: 0.008285818679769375
+
+precision: 0.8829922917784667
+std: 0.01305971334782566
+
+recall: 0.8664931685119968
+std: 0.012600731727691545
+
+f1: 0.8745611436830822
+std: 0.008665074542409449

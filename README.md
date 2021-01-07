@@ -1,4 +1,4 @@
-# EEE01 Data Analytics and Machine Learning
+# **Into the Online World: Human or Bot?**
 
 **Dataset used**: cresci-stock-2018
 
@@ -20,7 +20,7 @@ Results of our findings can be found in the `results` folder.
 
 ### Classification only
 
-If you would like to jump straight into classification between bot and human accounts, follow the steps in **classification**. Filtering is not required as we have already generated the filtered dataset for you.
+If you would like to jump straight into classification between bot and human accounts, follow the steps in **experiments 1, 2, and 3**. Filtering is not required as we have already generated the filtered dataset for you.
 
 
 
@@ -48,7 +48,7 @@ If you would like to skip step 3, extract `twint results.csv` from `unfiltered d
 
 
 
-## Classification
+## Experiment 1: Compare between types of algorithm
 There are two types of classification that we are employing:
 1. user based classification
 2. tweet based classification
@@ -57,7 +57,7 @@ There are two types of classification that we are employing:
 
 
 
-### User based classification
+### Experiment 1.1: User-based classification
 
 Follow steps 1 and 2 of **filter** if you would like to obtain the dataset from scratch.
 
@@ -75,7 +75,7 @@ To switch to user based classification:
 
 
 
-### Tweet based classification
+### Experiment 1.2 and 1.3: Tweet-based classification
 
 Follow steps 1, 3 and 4 of **filter** if you would like to obtain the dataset from scratch.
 
@@ -101,9 +101,47 @@ To switch to tweet based classification *by user*:
 
 
 
+## Experiment 2: Compare within best type of algorithm
+
+If you took a sneak peek at our results or have already done experiment 1, you might already know that user based classification that uses tree-based algorithms like random forest classifier has the best performance.
+
+
+
+### Experiment 2.1: User based classification (comparing between tree-based algorithms)
+
+Run `classification (user based classification, tree-based).py` to get results.
+
+
+
+## Experiment 3: Optimization of algorithm
+
+### Experiment 3.1: Randomized search for hyperparameter tuning
+
+Run `classification (user based classification, random forest, hyperparameter tuning, RandomizedSearchCV).py` to get results.
+
+
+
+### Experiment 3.2: Time-scoring analysis where one hyperparameter is changed while the rest kept constant at default values
+
+Run `classification (user based classification, random forest, time-scoring analysis).py` to get results.
+
+
+
+### Experiment 3.3: Exhaustive search for hyperparameter tuning
+
+Run `classification (user based classification, random forest, hyperparameter tuning, GridSearchCV).py` to get results.
+
+
+
+### Experiment 3.4: Precision-recall trade-off for hyperparameter-tuned algorithm
+
+Run `classification (user based classification, random forest, hyperparameter tuned, precision recall trade-off).py` to get results.
+
+
+
 ## Debugging
 
-Debugging is used as last resort in case of certain errors. For manual debugging of `filter (create unfiltered dataset for tweet based classification).py`, use `debugger.py`. It is **recommended** to save the output in IDLE for future reference. Results are stored in `debug log.csv`.
+Debugging is used as last resort in case of certain errors, generally during filtering. For manual debugging of `filter (create unfiltered dataset for tweet based classification).py`, use `debugger.py`. It is **recommended** to save the output in IDLE for future reference. Debug logs are stored in `debug log.csv`.
 
 
 
@@ -123,16 +161,7 @@ To add rows to `unfiltered dataset/twint results.csv`, copy and paste from `debu
 
 
 
-## To-do list
-
-- [x] `filter (remove deleted, suspended accounts).py`
-- [x] `filter (create dataset for user based classification).py`
-- [x] `filter (create unfiltered dataset for tweet based classification).py`
-- [x] `filter (create dataset for tweet based classification).py`
-
-
-
-### Comments
+## Comments
 
 - When we did tweet based classification by tweet, we found that the f1 measure is very low. Hence, we switched to average of all tweets made by user during the same 100-day period.
 - We also note that our dataset is not large enough to sieve out the specific names of hashtags and cashtags in tweets and description etc as it may result in higher bias and an inaccurate algorithm.
