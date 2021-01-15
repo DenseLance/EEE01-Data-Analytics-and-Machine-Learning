@@ -9,7 +9,7 @@ warnings.filterwarnings('ignore')
 import numpy as np
 import pandas as pd
 
-dataset = pd.read_csv("filtered dataset/tweet based classification (by tweet).csv")
+dataset = pd.read_csv("filtered dataset/user based classification.csv")
 dataset.shape
 dataset.head()
 dataset.describe()
@@ -79,9 +79,7 @@ for classifier in classifiers:
     plt.ylim(bottom = 0, top = 1.0)
     fig.tight_layout(pad = 4)
     
-plt.bar(list(measures.keys()), [measure[0] for measure in list(measures.values())], color = "grey")
-
-plt.suptitle("Tweet Based Classification (By Tweet)", fontweight = "bold", fontsize = "x-large", x = 0.51, y = 0.99)
+plt.suptitle("User Based Classification", fontweight = "bold", fontsize = "x-large", x = 0.51, y = 0.99)
 
 wm = plt.get_current_fig_manager()
 wm.window.state("zoomed")

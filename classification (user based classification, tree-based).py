@@ -71,8 +71,6 @@ for classifier in classifiers:
     plt.ylim(bottom = 0, top = 1.0)
     fig.tight_layout(pad = 4)
     
-plt.bar(list(measures.keys()), [measure[0] for measure in list(measures.values())], color = "grey")
-
 plt.suptitle("User Based Classification (Comparing Tree Based Classification Algorithms)", fontweight = "bold", fontsize = "x-large", x = 0.51, y = 0.99)
 
 wm = plt.get_current_fig_manager()
