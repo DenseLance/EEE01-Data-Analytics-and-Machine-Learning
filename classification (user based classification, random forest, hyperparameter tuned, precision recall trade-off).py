@@ -41,11 +41,28 @@ import matplotlib as mpl
 
 predictions = cross_val_predict(random_forest, X, y, cv = cross_validator, method = "predict_proba")
 precisions, recalls, thresholds = precision_recall_curve(y, predictions[:,1])
+precisions, recalls = precisions[:-1], recalls[:-1] # last value ignored
+
+max_precision_indexes, max_recall_indexes = np.where(precisions == np.amax(precisions))[0], np.where(recalls == np.amax(recalls))[0]
+
+print("<< When precision is maximised >>")
+print()
+print(f"best precision: {list(precisions)[max_precision_indexes[0]]}")
+print()
+print(f"best recall: {max([list(recalls)[i] for i in range(len(list(recalls))) if i in max_precision_indexes])}")
+
+print("\n\n\n\n")
+
+print("<< When recall is maximised >>")
+print()
+print(f"best precision: {max([list(precisions)[i] for i in range(len(list(precisions))) if i in max_recall_indexes])}")
+print()
+print(f"best recall: {list(recalls)[max_recall_indexes[0]]}")
 
 fig = plt.figure(figsize = (15, 10))
 mpl.style.use('seaborn')
-plt.plot(thresholds, precisions[:-1], label = "Precision", color = "green")
-plt.plot(thresholds, recalls[:-1], label = "Recall", color = "red")
+plt.plot(thresholds, precisions, label = "Precision", color = "green")
+plt.plot(thresholds, recalls, label = "Recall", color = "red")
 plt.xlabel("Threshold")
 plt.ylabel("Precision/Recall")
 plt.yticks([0.2 * label for label in range(0, 6)])

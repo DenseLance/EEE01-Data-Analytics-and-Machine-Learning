@@ -1,0 +1,15 @@
+<< When precision is maximised >>
+
+best precision: 1.0
+
+best recall: 0.08763751631549506
+
+
+
+
+
+<< When recall is maximised >>
+
+best precision: 0.5374824614151132
+
+best recall: 1.0
