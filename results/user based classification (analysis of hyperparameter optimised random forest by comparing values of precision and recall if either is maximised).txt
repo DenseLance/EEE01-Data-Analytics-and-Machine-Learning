@@ -4,6 +4,8 @@ best precision: 1.0
 
 best recall: 0.08763751631549506
 
+f1 score: 0.1611520658323333
+
 
 
 
@@ -13,3 +15,5 @@ best recall: 0.08763751631549506
 best precision: 0.5374824614151132
 
 best recall: 1.0
+
+f1 score: 0.6991721530539078

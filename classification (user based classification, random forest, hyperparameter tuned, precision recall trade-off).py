@@ -47,17 +47,29 @@ max_precision_indexes, max_recall_indexes = np.where(precisions == np.amax(preci
 
 print("<< When precision is maximised >>")
 print()
-print(f"best precision: {list(precisions)[max_precision_indexes[0]]}")
+precision = list(precisions)[max_precision_indexes[0]]
+print(f"best precision: {precision}")
 print()
-print(f"best recall: {max([list(recalls)[i] for i in range(len(list(recalls))) if i in max_precision_indexes])}")
+recall = max([list(recalls)[i] for i in range(len(list(recalls))) if i in max_precision_indexes])
+print(f"best recall: {recall}")
+print()
+f1 = 2 * (precision * recall) / (precision + recall)
+print(f"f1 score: {f1}")
+print()
 
-print("\n\n\n\n")
+print("\n\n\n")
 
 print("<< When recall is maximised >>")
 print()
-print(f"best precision: {max([list(precisions)[i] for i in range(len(list(precisions))) if i in max_recall_indexes])}")
+precision = max([list(precisions)[i] for i in range(len(list(precisions))) if i in max_recall_indexes])
+print(f"best precision: {precision}")
 print()
-print(f"best recall: {list(recalls)[max_recall_indexes[0]]}")
+recall = list(recalls)[max_recall_indexes[0]]
+print(f"best recall: {recall}")
+print()
+f1 = 2 * (precision * recall) / (precision + recall)
+print(f"f1 score: {f1}")
+print()
 
 fig = plt.figure(figsize = (15, 10))
 mpl.style.use('seaborn')
